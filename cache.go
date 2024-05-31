@@ -3,7 +3,6 @@ package cache
 import (
 	"os"
 	"strconv"
-	"time"
 
 	redis "github.com/redis/go-redis/v9"
 	"github.com/sibeur/go-sibeur/cache/driver"
@@ -58,7 +57,7 @@ func NewCache() Cache {
 	// discover cache type
 	cacheType := os.Getenv("CACHE_TYPE")
 	if cacheType == "" {
-		cacheType = "redis"
+		cacheType = "memory"
 	}
 
 	switch cacheType {
@@ -82,7 +81,7 @@ func NewCache() Cache {
 
 	case "memory":
 		// load memory cache
-		cache = driver.NewMemoryCache(time.Hour * 1)
+		cache = driver.NewMemoryCache()
 	default:
 		panic("Cache type not supported")
 	}

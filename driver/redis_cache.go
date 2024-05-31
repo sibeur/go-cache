@@ -11,9 +11,9 @@ import (
 
 // RedisCache represents a cache driver that uses Redis as the underlying storage.
 type RedisCache struct {
-	client      *redis.Client
-	isAvailable bool
-	driverName  string
+	client      *redis.Client // client is the Redis client used for cache operations.
+	isAvailable bool          // isAvailable indicates whether the Redis cache is available or not.
+	driverName  string        // driverName is the name of the Redis cache driver.
 }
 
 // NewRedisCache creates a new instance of RedisCache using the provided Redis client.

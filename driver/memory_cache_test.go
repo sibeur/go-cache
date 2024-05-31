@@ -8,8 +8,7 @@ import (
 )
 
 func TestMemoryCache_Set_Get(t *testing.T) {
-	expire := time.Minute
-	cache := driver.NewMemoryCache(expire)
+	cache := driver.NewMemoryCache()
 
 	// Test case 1: Set a value and retrieve it
 	key := "key1"
@@ -44,8 +43,7 @@ func TestMemoryCache_Set_Get(t *testing.T) {
 }
 
 func TestMemoryCache_Delete(t *testing.T) {
-	expire := time.Minute
-	cache := driver.NewMemoryCache(expire)
+	cache := driver.NewMemoryCache()
 
 	// Set a value
 	key := "key1"
@@ -80,8 +78,7 @@ func TestMemoryCache_Delete(t *testing.T) {
 }
 
 func TestMemoryCache_Flush(t *testing.T) {
-	expire := time.Minute
-	cache := driver.NewMemoryCache(expire)
+	cache := driver.NewMemoryCache()
 
 	// Set a value
 	key := "key1"
@@ -115,8 +112,7 @@ func TestMemoryCache_Flush(t *testing.T) {
 }
 
 func TestMemoryCache_SetWithExpire(t *testing.T) {
-	expire := time.Second
-	cache := driver.NewMemoryCache(expire)
+	cache := driver.NewMemoryCache()
 
 	// Set a value with
 	key := "setwithexpirememory"
@@ -166,8 +162,7 @@ func TestMemoryCache_SetWithExpire(t *testing.T) {
 }
 
 func TestMemoryCache_IsCacheAvailable(t *testing.T) {
-	expire := time.Minute
-	cache := driver.NewMemoryCache(expire)
+	cache := driver.NewMemoryCache()
 
 	// Check if the cache is available
 	if !cache.IsCacheAvailable() {
@@ -184,8 +179,7 @@ func TestMemoryCache_IsCacheAvailable(t *testing.T) {
 }
 
 func TestMemoryCache_SetCacheAvailable(t *testing.T) {
-	expire := time.Minute
-	cache := driver.NewMemoryCache(expire)
+	cache := driver.NewMemoryCache()
 
 	// Set the cache to be unavailable
 	cache.SetCacheAvailable(false)
@@ -205,12 +199,39 @@ func TestMemoryCache_SetCacheAvailable(t *testing.T) {
 }
 
 func TestMemoryCache_GetDriverName(t *testing.T) {
-	expire := time.Minute
-	cache := driver.NewMemoryCache(expire)
+	cache := driver.NewMemoryCache()
 
 	// Check the driver name
 	driverName := cache.GetDriverName()
 	if driverName != "memory" {
 		t.Errorf("Expected driver name to be MemoryCache, but got %s", driverName)
 	}
+}
+
+func TestMemoryCache_SetWithExpire_WithLongExpireOptionInNewMemoryCache(t *testing.T) {
+	cache := driver.NewMemoryCache()
+
+	// Set a value with
+	key := "setwithexpirememory"
+	value := "value1"
+	err := cache.SetWithExpire(key, value, 1)
+	if err != nil {
+		t.Errorf("Failed to set value with expiry: %v", err)
+	}
+
+	// Wait for the value to expire
+	// Sleep for 2 seconds to ensure the value has expired
+	time.Sleep(4 * time.Second)
+
+	// Get the value from the cache
+	retrievedValue, err := cache.Get(key)
+	if err != nil {
+		t.Errorf("Failed to retrieve value: %v", err)
+	}
+
+	// Check if the retrieved value is empty
+	if retrievedValue != "" {
+		t.Errorf("Expected value to be empty, but got %s", retrievedValue)
+	}
+
 }
