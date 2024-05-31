@@ -19,7 +19,7 @@ type MemoryCache struct {
 }
 
 func NewMemoryCache(expire time.Duration) *MemoryCache {
-	driverName := "MemoryCache"
+	driverName := "memory"
 	log.Printf("[%s] initiate cache", driverName)
 	cache := &MemoryCache{
 		data:        make(map[string]interface{}),

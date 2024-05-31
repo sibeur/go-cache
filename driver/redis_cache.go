@@ -16,14 +16,16 @@ type RedisCache struct {
 }
 
 func NewRedisCache(client *redis.Client) *RedisCache {
-	driverName := "RedisCache"
+	driverName := "redis"
 	log.Printf("[%s] initiate cache", driverName)
 	// ping redis
 	pong, _ := client.Ping(context.Background()).Result()
+	available := true
 	if pong == "" {
 		log.Println(common.ErrCacheUnavailableMsg)
+		available = false
 	}
-	available := pong == "PONG"
+
 	return &RedisCache{
 		client:      client,
 		isAvailable: available,

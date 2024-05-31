@@ -210,7 +210,7 @@ func TestMemoryCache_GetDriverName(t *testing.T) {
 
 	// Check the driver name
 	driverName := cache.GetDriverName()
-	if driverName != "MemoryCache" {
+	if driverName != "memory" {
 		t.Errorf("Expected driver name to be MemoryCache, but got %s", driverName)
 	}
 }
