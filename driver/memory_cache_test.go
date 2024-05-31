@@ -1,4 +1,4 @@
-package tests
+package driver_test
 
 import (
 	"testing"
@@ -119,7 +119,7 @@ func TestMemoryCache_SetWithExpire(t *testing.T) {
 	cache := driver.NewMemoryCache(expire)
 
 	// Set a value with
-	key := "key1"
+	key := "setwithexpirememory"
 	value := "value1"
 	err := cache.SetWithExpire(key, value, 1)
 	if err != nil {
@@ -163,4 +163,54 @@ func TestMemoryCache_SetWithExpire(t *testing.T) {
 		t.Errorf("Expected value to be empty, but got %s", retrievedValue)
 	}
 
+}
+
+func TestMemoryCache_IsCacheAvailable(t *testing.T) {
+	expire := time.Minute
+	cache := driver.NewMemoryCache(expire)
+
+	// Check if the cache is available
+	if !cache.IsCacheAvailable() {
+		t.Errorf("Expected cache to be available, but got unavailable")
+	}
+
+	// Set the cache to be unavailable
+	cache.SetCacheAvailable(false)
+
+	// Check if the cache is unavailable
+	if cache.IsCacheAvailable() {
+		t.Errorf("Expected cache to be unavailable, but got available")
+	}
+}
+
+func TestMemoryCache_SetCacheAvailable(t *testing.T) {
+	expire := time.Minute
+	cache := driver.NewMemoryCache(expire)
+
+	// Set the cache to be unavailable
+	cache.SetCacheAvailable(false)
+
+	// Check if the cache is unavailable
+	if cache.IsCacheAvailable() {
+		t.Errorf("Expected cache to be unavailable, but got available")
+	}
+
+	// Set the cache to be available
+	cache.SetCacheAvailable(true)
+
+	// Check if the cache is available
+	if !cache.IsCacheAvailable() {
+		t.Errorf("Expected cache to be available, but got unavailable")
+	}
+}
+
+func TestMemoryCache_GetDriverName(t *testing.T) {
+	expire := time.Minute
+	cache := driver.NewMemoryCache(expire)
+
+	// Check the driver name
+	driverName := cache.GetDriverName()
+	if driverName != "MemoryCache" {
+		t.Errorf("Expected driver name to be MemoryCache, but got %s", driverName)
+	}
 }
