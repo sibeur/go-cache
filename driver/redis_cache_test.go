@@ -1,4 +1,4 @@
-package tests
+package driver_test
 
 import (
 	"testing"
@@ -73,8 +73,10 @@ func TestRedisCache_SetWithExpire(t *testing.T) {
 	// Create a RedisCache instance
 	cache := driver.NewRedisCache(client)
 
+	key := "setwithexpireredis"
+	value := "value1"
 	// Set a value in the cache with an expiry time of 1 second
-	err := cache.SetWithExpire("key", "value", 1)
+	err := cache.SetWithExpire(key, value, 1)
 	if err != nil {
 		t.Errorf("Failed to set value in cache with expiry: %v", err)
 	}
@@ -84,7 +86,7 @@ func TestRedisCache_SetWithExpire(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Get the value from the cache
-	value, err := cache.Get("key")
+	value, err = cache.Get(key)
 	if err != nil && err != redis.Nil {
 		t.Errorf("Failed to get value from cache: %v", err)
 	}
@@ -158,5 +160,57 @@ func TestRedisCache_Flush(t *testing.T) {
 	// Check if the retrieved value is empty
 	if value != "" {
 		t.Errorf("Expected value to be empty, but got %s", value)
+	}
+}
+
+func TestRedisCache_IsCacheAvailable(t *testing.T) {
+	// Create a Redis client for testing
+	client := redis.NewClient(&redis.Options{
+		Addr: "localhost:6379",
+	})
+
+	// Create a RedisCache instance
+	cache := driver.NewRedisCache(client)
+
+	// Check if the cache is available
+	if !cache.IsCacheAvailable() {
+		t.Errorf("Expected cache to be available, but got unavailable")
+	}
+}
+
+func TestRedisCache_SetCacheAvailable(t *testing.T) {
+	// Create a Redis client for testing
+	client := redis.NewClient(&redis.Options{
+		Addr: "localhost:6379",
+	})
+
+	// Create a RedisCache instance
+	cache := driver.NewRedisCache(client)
+
+	// Set the cache to be unavailable
+	cache.SetCacheAvailable(false)
+
+	// Check if the cache is unavailable
+	if cache.IsCacheAvailable() {
+		t.Errorf("Expected cache to be unavailable, but got available")
+	}
+}
+
+func TestRedisCache_GetDriverName(t *testing.T) {
+	// Create a Redis client for testing
+	client := redis.NewClient(&redis.Options{
+		Addr: "localhost:6379",
+	})
+
+	// Create a RedisCache instance
+	cache := driver.NewRedisCache(client)
+
+	// Get the driver name
+	driverName := cache.GetDriverName()
+
+	// Check if the driver name matches the expected value
+	expectedDriverName := "RedisCache"
+	if driverName != expectedDriverName {
+		t.Errorf("Expected driver name %s, but got %s", expectedDriverName, driverName)
 	}
 }
