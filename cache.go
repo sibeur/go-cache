@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	redis "github.com/redis/go-redis/v9"
-	"github.com/sibeur/go-sibeur/cache/driver"
+	"github.com/sibeur/go-cache/driver"
 )
 
 // Cache represents the interface for interacting with a cache.

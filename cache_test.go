@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sibeur/go-sibeur/cache"
+	"github.com/sibeur/go-cache"
 )
 
 func TestNewCache(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/sibeur/go-sibeur/cache
+module github.com/sibeur/go-cache
 
 go 1.22.0
 

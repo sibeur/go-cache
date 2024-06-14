@@ -9,7 +9,7 @@ The Go Cache Library is an amazing caching solution designed for Go applications
 
 ## Installation
 ```bash
-go get github.com/sibeur/go-sibeur/cache
+go get github.com/sibeur/go-cache
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ package main
 import (
 	"log"
 
-	c "github.com/sibeur/go-sibeur/cache"
+	c "github.com/sibeur/go-cache"
 )
 
 func main() {

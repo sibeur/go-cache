@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sibeur/go-sibeur/cache/common"
+	"github.com/sibeur/go-cache/common"
 )
 
 // MemoryCache represents an in-memory cache implementation.

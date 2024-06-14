@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	c "github.com/sibeur/go-sibeur/cache"
+	c "github.com/sibeur/go-cache"
 )
 
 func main() {

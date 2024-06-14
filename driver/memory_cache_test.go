@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sibeur/go-sibeur/cache/driver"
+	"github.com/sibeur/go-cache/driver"
 )
 
 func TestMemoryCache_Set_Get(t *testing.T) {

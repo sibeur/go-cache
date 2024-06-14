@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/sibeur/go-sibeur/cache/driver"
+	"github.com/sibeur/go-cache/driver"
 )
 
 func TestRedisCache_Get(t *testing.T) {

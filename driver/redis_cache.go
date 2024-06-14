@@ -6,7 +6,7 @@ import (
 	"time"
 
 	redis "github.com/redis/go-redis/v9"
-	"github.com/sibeur/go-sibeur/cache/common"
+	"github.com/sibeur/go-cache/common"
 )
 
 // RedisCache represents a cache driver that uses Redis as the underlying storage.
