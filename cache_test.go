@@ -102,7 +102,7 @@ func TestNewCacheWithEmptyRedisAddr(t *testing.T) {
 func TestNewCacheWithEmptyType(t *testing.T) {
 	os.Setenv("CACHE_TYPE", "")
 	cache := cache.NewCache()
-	if cache.GetDriverName() != "redis" {
-		t.Errorf("Expected driver name %s, but got %s", "redis", cache.GetDriverName())
+	if cache.GetDriverName() != "memory" {
+		t.Errorf("Expected driver name %s, but got %s", "memory", cache.GetDriverName())
 	}
 }
